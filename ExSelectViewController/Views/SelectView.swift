@@ -9,9 +9,9 @@ import UIKit
 
 class SelectView: UIView {
     var uiColor: UIColor = UIColor.BaseGray200
-    var elements: [String] = [] // 선택할 수 있는 항목 데이터
-    var selectedElements: [Int] = [] // 선택한 항목 cell의 indexPath.row를 저장
-    var previousSelectedElements: [Int] = []
+    var elements: [String] // 선택할 수 있는 항목 데이터
+    var selectedElements: [Int] = []// 선택한 항목 cell의 indexPath.row를 저장
+    var previousSelectedElements: [Int]
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -47,8 +47,11 @@ class SelectView: UIView {
         return table
     }()
     
-    init(frame: CGRect, title: String, style:UIStyle) {
+    init(frame: CGRect, titleText: String, style:UIStyle, elements: [String], previousSelectedElements: [Int]) {
+        self.elements = elements
+        self.previousSelectedElements = previousSelectedElements
         super.init(frame: frame)
+        titleLabel.text = titleText
         
         switch style {
         case .green:
@@ -61,13 +64,12 @@ class SelectView: UIView {
             clearButton.setTitleColor(UIColor.white, for: .normal)
         }
         
-        titleLabel.text = title
         setup()
+        setPreviousSelectedElement()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setup() {

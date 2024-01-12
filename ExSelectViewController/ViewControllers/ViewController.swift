@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     // Data
     var dataList: [String] = ["선택항목 1", "선택항목 2", "선택항목 3", "선택항목 4", "선택항목 5", "선택항목 6", "선택항목 7", "선택항목 8", "선택항목 9", "선택항목 10"]
     var selectedElements: [Int] = []
@@ -80,39 +79,23 @@ private extension ViewController {
     
     @objc func greenButtonTapped(sender: UIButton) {
         print("green tapped")
-        let vc = SelectViewController()
-        vc.selectViewControllerDelegate = self
-        vc.titleText = "선택화면 1"
-        vc.style = .green
-        vc.elements = dataList
-        vc.previousSelectedElements = selectedElements
-        vc.sender = sender
-        
-        if let sheet = vc.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.preferredCornerRadius = 30
-            sheet.prefersGrabberVisible = true
-       }
-       present(vc, animated: true)
+        let vc = SelectViewController(titleText: "선택화면 1", style: .green, sender: sender, elements: dataList, previousSelectedElements: selectedElements, delegate: self)
+        presentSheetPresentationController(vc: vc)
     }
     
     @objc func navyButtonTapped(sender: UIButton) {
         print("navy tapped")
-        let vc = SelectViewController()
-        vc.selectViewControllerDelegate = self
-        vc.titleText = "선택화면 2"
-        vc.style = .navy
-        vc.elements = dataList
-        vc.previousSelectedElements = selectedElements
-        vc.sender = sender
-        
+        let vc = SelectViewController(titleText: "선택화면 2", style: .navy, sender: sender, elements: dataList, previousSelectedElements: selectedElements, delegate: self)
+        presentSheetPresentationController(vc: vc)
+    }
+    
+    func presentSheetPresentationController(vc: UIViewController) {
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.preferredCornerRadius = 30
             sheet.prefersGrabberVisible = true
        }
        present(vc, animated: true)
-        
     }
 }
 
